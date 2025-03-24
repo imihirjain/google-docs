@@ -7,6 +7,7 @@ import {
   ConvexReactClient,
   Authenticated,
   Unauthenticated,
+  AuthLoading,
 } from "convex/react";
 import { FullScreenLoader } from "./fullscreen-loader";
 
@@ -24,7 +25,9 @@ export function ConvexClientProvider({ children }: { children: ReactNode }) {
             <SignIn routing="hash" />
           </div>
         </Unauthenticated>
-        <FullScreenLoader label="Auth loading..." />
+        <AuthLoading>
+          <FullScreenLoader label="Auth loading..." />
+        </AuthLoading>
       </ConvexProviderWithClerk>
     </ClerkProvider>
   );

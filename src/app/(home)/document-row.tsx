@@ -33,7 +33,7 @@ export const DocumentRow = ({ document }: DocumentRowProps) => {
       <TableCell className="text-muted-foreground hidden md:table-cell">
         {format(new Date(document._creationTime), "MMM, dd, yyyy")}
       </TableCell>
-      <TableCell className="flexjustify-end">
+      <TableCell className="flex justify-end">
         <DocumentMenu
           documentId={document._id}
           onNewTab={() => window.open(`/documents/${document._id}`, "_blank")}

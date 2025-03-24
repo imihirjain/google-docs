@@ -1,11 +1,22 @@
 import { useRef, useState } from "react";
 import { FaCaretDown } from "react-icons/fa";
+import { useStorage, useMutation } from "@liveblocks/react";
+
+import { LEFT_MARGIN_DEFAULT, RIGHT_MARGIN_DEFAULT } from "@/constants/margin";
 
 const markers = Array.from({ length: 83 }, (_, i) => i);
 export const Ruler = () => {
-  const [leftMouse, setLeftMouse] = useState(56);
-  const [rightMouse, setRightMouse] = useState(56);
+  const leftMargin =
+    useStorage((root) => root.leftMargin) ?? LEFT_MARGIN_DEFAULT;
+  const setLeftMargin = useMutation(({ storage }, position: number) => {
+    storage.set("leftMargin", position);
+  }, []);
 
+  const rightMargin =
+    useStorage((root) => root.rightMargin) ?? RIGHT_MARGIN_DEFAULT;
+  const setRightMargin = useMutation(({ storage }, position: number) => {
+    storage.set("rightMargin", position);
+  }, []);
   const [isDraggLeft, setIsDraggLeft] = useState(false);
   const [isDraggRight, setIsDraggRight] = useState(false);
 
@@ -28,15 +39,15 @@ export const Ruler = () => {
         const rawPos = Math.max(0, Math.min(816, relativeX));
 
         if (isDraggLeft) {
-          const maxLeftPos = 816 - rightMouse - 100;
+          const maxLeftPos = 816 - rightMargin - 100;
           const newLeftPos = Math.min(rawPos, maxLeftPos);
-          setLeftMouse(newLeftPos);
+          setLeftMargin(newLeftPos);
         } else if (isDraggRight) {
-          const maxRightPos = 816 - (leftMouse + 100);
+          const maxRightPos = 816 - (leftMargin + 100);
           const newRightPos = Math.max(816 - rawPos, 0);
           const constrainedRightPos = Math.min(newRightPos, maxRightPos);
 
-          setRightMouse(constrainedRightPos);
+          setRightMargin(constrainedRightPos);
         }
       }
     }
@@ -48,10 +59,10 @@ export const Ruler = () => {
   };
 
   const handleLeftDoubleClick = () => {
-    setLeftMouse(56);
+    setLeftMargin(LEFT_MARGIN_DEFAULT);
   };
   const handleRightDoubleClick = () => {
-    setRightMouse(56);
+    setRightMargin(RIGHT_MARGIN_DEFAULT);
   };
 
   return (
@@ -64,14 +75,14 @@ export const Ruler = () => {
     >
       <div id="ruler-container" className="w-full h-full relative">
         <Marker
-          position={leftMouse}
+          position={leftMargin}
           isLeft={true}
           isDragging={isDraggLeft}
           onMouseDown={handleLeftMouseDown}
           onDoubleClick={handleLeftDoubleClick}
         />
         <Marker
-          position={rightMouse}
+          position={rightMargin}
           isLeft={false}
           isDragging={isDraggRight}
           onMouseDown={handleRightMouseDown}

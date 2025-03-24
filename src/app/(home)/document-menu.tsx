@@ -27,7 +27,6 @@ export const DocumentMenu = ({
   title,
   onNewTab,
 }: DocumentMenuProps) => {
-  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -55,7 +54,13 @@ export const DocumentMenu = ({
             Remove
           </DropdownMenuItem>
         </RemoveDialog>
-        <DropdownMenuItem onClick={() => onNewTab(documentId)}>
+        <DropdownMenuItem
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onNewTab(documentId);
+          }}
+        >
           <ExternalLinkIcon className="size-4 mr-2" />
           Open in a new tab
         </DropdownMenuItem>
