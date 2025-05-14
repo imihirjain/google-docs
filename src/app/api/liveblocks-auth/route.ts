@@ -35,10 +35,6 @@ export async function POST(req:Request){
     {
         return new Response("Unauthorized",{status:401})
     }
-
-//     const userEmail = user.primaryEmailAddress?.emailAddress || user.emailAddresses?.[0]?.emailAddress;
-// const userName = user.fullName || userEmail || "Anonymous";
-
 const name =user.fullName??user.primaryEmailAddress?.emailAddress??"Anonymous";
 
 const nameToNumber = name.split("").reduce((acc,char)=>acc+char.charCodeAt(0),0);
@@ -54,6 +50,7 @@ const color = `hsl(${hue},80%,60%)`;
         }
     })
     console.log(user)
+    console.log(session)
     session.allow(room,session.FULL_ACCESS);
     const {body,status}=await session.authorize();
     return new Response(body,{status})
