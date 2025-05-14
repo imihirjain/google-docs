@@ -32,6 +32,7 @@ import {
   RIGHT_MARGIN_DEFAULT,
   WIDTH_MARGIN_DEFAULT,
 } from "@/constants/margin";
+import AIContentGenerator from "@/components/ai-generate";
 
 interface EditorProps {
   initialContent?: string | undefined;
@@ -118,6 +119,7 @@ export const Editor = ({ initialContent }: EditorProps) => {
   });
   return (
     <div className="size-full overflow-x-auto bg-[#f9fbfd] px-4 print:p-0 print:bg-white print:overflow-visible">
+      {/* <AIContentGenerator editor={editor} /> */}
       <Ruler />
       <div
         className={`min-w-max flex justify-center w-[${WIDTH_MARGIN_DEFAULT}px] py-4 print:py-0 mx-auto print:w-full print:min-w-0`}
